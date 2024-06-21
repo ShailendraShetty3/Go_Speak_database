@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('cfps/', CfpsListCreateView.as_view(), name='cfps-list-create'),
     path('events/', EventsListCreateView.as_view(), name='cfps-list-create'),
+    path('proposals/', EventsListCreateView.as_view(), name='proposals-list-create'),
 
     # Swagger JSON and YAML format
     path('swagger.<str:format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),

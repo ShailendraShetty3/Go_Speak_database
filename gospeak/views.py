@@ -1,7 +1,7 @@
 from rest_framework import status, generics, parsers
 from rest_framework.response import Response
-from .models import Groups, Cfps, Events
-from .serializers import GroupsSerializer, CfpsSerializer, EventsSerializer
+from .models import Groups, Cfps, Events, Proposals
+from .serializers import GroupsSerializer, CfpsSerializer, EventsSerializer, ProposalsSerializer
 from django.shortcuts import get_object_or_404
 
 class GroupsListCreateView(generics.ListCreateAPIView):
@@ -108,6 +108,28 @@ class CfpsListCreateView(generics.ListCreateAPIView):
 class EventsListCreateView(generics.ListCreateAPIView):
     queryset = Events.objects.all()
     serializer_class = EventsSerializer
+    parser_classes = [parsers.MultiPartParser]
+
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+
+#Proposals
+
+class ProposalsListCreateView(generics.ListCreateAPIView):
+    queryset = Proposals.objects.all()
+    serializer_class = ProposalsSerializer
     parser_classes = [parsers.MultiPartParser]
 
     def list(self, request):
