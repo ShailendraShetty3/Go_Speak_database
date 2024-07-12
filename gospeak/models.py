@@ -8,6 +8,7 @@ class Groups(models.Model):
     phone = models.CharField(max_length=15)
     website = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)
+    group_image = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def __str__(self):
         return self.name
@@ -51,6 +52,7 @@ class Events(models.Model):
     tags = models.CharField(max_length=15)
     begin = models.CharField(max_length=50)
     close = models.CharField(max_length=50)
+    event_image = models.ImageField(null=True, blank=True, upload_to="images/")
 
     def __str__(self):
         return self.name

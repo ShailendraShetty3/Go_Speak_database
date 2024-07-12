@@ -4,6 +4,12 @@ from .views import GroupsListCreateView, GroupsDetail
 from .views import CfpsListCreateView
 from .views import EventsListCreateView
 
+
+#for media
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -36,4 +42,4 @@ urlpatterns = [
 
     # Redoc UI
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
